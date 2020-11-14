@@ -33,7 +33,29 @@ class RegisterUser(ServiceBase):
         except IntegrityError as e:
             raise Fault(faultcode=str(e[0]), faultstring=str(e[1]))
 
+    @rpc(Integer, Integer, Float, _returns=String)
+    def fill_wallet(ctx,telephone,id_document,amount):
+        try:
+            user = User.objects.get(id_document=id_document)
+        except user.DoesNotExist as e :
+            raise Fault( faultstring=str(e))
 
+        wallet = Wallet.objects.filter(user=user)
+        
+        if wallet:
+            wallet = wallet.first()
+            try:
+                wallet.amount = amount + wallet.amount
+                wallet.save()
+                return "true"
+            except IntegrityError as e:
+                raise Fault(faultcode=str(e[0]), faultstring=str(e[1]))
+        try:            
+            Wallet.objects.create(user=user, amount=amount)
+            return "true"
+        except IntegrityError as e:
+            raise Fault(faultcode=str(e[0]), faultstring=str(e[1]))
+             
 application = Application(
     [RegisterUser],
     tns='spyne.examples.epayco',
