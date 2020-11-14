@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="spyne.examples.hello" name="Application" xmlns:plink="http://schemas.xmlsoap.org/ws/2003/05/partner-link/" xmlns:soap11enc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:soap11env="http://schemas.xmlsoap.org/soap/envelope/" xmlns:soap12enc="http://www.w3.org/2003/05/soap-encoding" xmlns:soap12env="http://www.w3.org/2003/05/soap-envelope" xmlns:tns="spyne.examples.hello" xmlns:wsa="http://schemas.xmlsoap.org/ws/2003/03/addressing" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap11="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsdlsoap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <wsdl:types>
+    <xs:schema targetNamespace="spyne.examples.hello" elementFormDefault="qualified">
+      <xs:complexType name="floatArray">
+        <xs:sequence>
+          <xs:element name="float" type="xs:float" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="stringArray">
+        <xs:sequence>
+          <xs:element name="string" type="xs:string" minOccurs="0" maxOccurs="unbounded" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="create_purchase_order">
+        <xs:sequence>
+          <xs:element name="total_amount" type="xs:float" minOccurs="0" nillable="true"/>
+          <xs:element name="id" type="xs:integer" minOccurs="0" nillable="true"/>
+          <xs:element name="purchase_token" type="xs:string" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="create_purchase_orderResponse">
+        <xs:sequence>
+          <xs:element name="create_purchase_orderResult" type="xs:string" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="data_user">
+        <xs:sequence>
+          <xs:element name="email" type="xs:string" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="fill_wallet">
+        <xs:sequence>
+          <xs:element name="telephone" type="xs:integer" minOccurs="0" nillable="true"/>
+          <xs:element name="id_document" type="xs:integer" minOccurs="0" nillable="true"/>
+          <xs:element name="amount" type="xs:float" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="fill_walletResponse">
+        <xs:sequence>
+          <xs:element name="fill_walletResult" type="xs:string" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="get_user">
+        <xs:sequence>
+          <xs:element name="email" type="xs:string" minOccurs="0" nillable="true"/>
+          <xs:element name="password" type="xs:string" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="get_userResponse">
+        <xs:sequence>
+          <xs:element name="get_userResult" type="xs:string" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="register_user">
+        <xs:sequence>
+          <xs:element name="name" type="xs:string" minOccurs="0" nillable="true"/>
+          <xs:element name="lastname" type="xs:string" minOccurs="0" nillable="true"/>
+          <xs:element name="telephone" type="xs:string" minOccurs="0" nillable="true"/>
+          <xs:element name="password" type="xs:string" minOccurs="0" nillable="true"/>
+          <xs:element name="id_document" type="xs:string" minOccurs="0" nillable="true"/>
+          <xs:element name="email" type="xs:string" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="register_userResponse">
+        <xs:sequence>
+          <xs:element name="register_userResult" type="xs:string" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="verify_funds">
+        <xs:sequence>
+          <xs:element name="id_document" type="xs:integer" minOccurs="0" nillable="true"/>
+          <xs:element name="telephone" type="xs:integer" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="verify_token_and_purchase">
+        <xs:sequence>
+          <xs:element name="token" type="xs:string" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="verify_token_and_purchaseResponse">
+        <xs:sequence>
+          <xs:element name="verify_token_and_purchaseResult" type="xs:string" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="data_userResponse">
+        <xs:sequence>
+          <xs:element name="data_userResult" type="tns:stringArray" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="verify_fundsResponse">
+        <xs:sequence>
+          <xs:element name="verify_fundsResult" type="tns:floatArray" minOccurs="0" nillable="true"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="floatArray" type="tns:floatArray"/>
+      <xs:element name="stringArray" type="tns:stringArray"/>
+      <xs:element name="create_purchase_order" type="tns:create_purchase_order"/>
+      <xs:element name="create_purchase_orderResponse" type="tns:create_purchase_orderResponse"/>
+      <xs:element name="data_user" type="tns:data_user"/>
+      <xs:element name="fill_wallet" type="tns:fill_wallet"/>
+      <xs:element name="fill_walletResponse" type="tns:fill_walletResponse"/>
+      <xs:element name="get_user" type="tns:get_user"/>
+      <xs:element name="get_userResponse" type="tns:get_userResponse"/>
+      <xs:element name="register_user" type="tns:register_user"/>
+      <xs:element name="register_userResponse" type="tns:register_userResponse"/>
+      <xs:element name="verify_funds" type="tns:verify_funds"/>
+      <xs:element name="verify_token_and_purchase" type="tns:verify_token_and_purchase"/>
+      <xs:element name="verify_token_and_purchaseResponse" type="tns:verify_token_and_purchaseResponse"/>
+      <xs:element name="data_userResponse" type="tns:data_userResponse"/>
+      <xs:element name="verify_fundsResponse" type="tns:verify_fundsResponse"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="create_purchase_order">
+    <wsdl:part name="create_purchase_order" element="tns:create_purchase_order"/>
+  </wsdl:message>
+  <wsdl:message name="create_purchase_orderResponse">
+    <wsdl:part name="create_purchase_orderResponse" element="tns:create_purchase_orderResponse"/>
+  </wsdl:message>
+  <wsdl:message name="register_user">
+    <wsdl:part name="register_user" element="tns:register_user"/>
+  </wsdl:message>
+  <wsdl:message name="register_userResponse">
+    <wsdl:part name="register_userResponse" element="tns:register_userResponse"/>
+  </wsdl:message>
+  <wsdl:message name="verify_token_and_purchase">
+    <wsdl:part name="verify_token_and_purchase" element="tns:verify_token_and_purchase"/>
+  </wsdl:message>
+  <wsdl:message name="verify_token_and_purchaseResponse">
+    <wsdl:part name="verify_token_and_purchaseResponse" element="tns:verify_token_and_purchaseResponse"/>
+  </wsdl:message>
+  <wsdl:message name="verify_funds">
+    <wsdl:part name="verify_funds" element="tns:verify_funds"/>
+  </wsdl:message>
+  <wsdl:message name="verify_fundsResponse">
+    <wsdl:part name="verify_fundsResponse" element="tns:verify_fundsResponse"/>
+  </wsdl:message>
+  <wsdl:message name="fill_wallet">
+    <wsdl:part name="fill_wallet" element="tns:fill_wallet"/>
+  </wsdl:message>
+  <wsdl:message name="fill_walletResponse">
+    <wsdl:part name="fill_walletResponse" element="tns:fill_walletResponse"/>
+  </wsdl:message>
+  <wsdl:message name="get_user">
+    <wsdl:part name="get_user" element="tns:get_user"/>
+  </wsdl:message>
+  <wsdl:message name="get_userResponse">
+    <wsdl:part name="get_userResponse" element="tns:get_userResponse"/>
+  </wsdl:message>
+  <wsdl:message name="data_user">
+    <wsdl:part name="data_user" element="tns:data_user"/>
+  </wsdl:message>
+  <wsdl:message name="data_userResponse">
+    <wsdl:part name="data_userResponse" element="tns:data_userResponse"/>
+  </wsdl:message>
+  <wsdl:service name="RegisterUser">
+    <wsdl:port name="Application" binding="tns:Application">
+      <wsdlsoap11:address location="http://localhost:7777/soap/payco/"/>
+    </wsdl:port>
+  </wsdl:service>
+  <wsdl:portType name="Application">
+    <wsdl:operation name="create_purchase_order" parameterOrder="create_purchase_order">
+      <wsdl:input name="create_purchase_order" message="tns:create_purchase_order"/>
+      <wsdl:output name="create_purchase_orderResponse" message="tns:create_purchase_orderResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="register_user" parameterOrder="register_user">
+      <wsdl:input name="register_user" message="tns:register_user"/>
+      <wsdl:output name="register_userResponse" message="tns:register_userResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="verify_token_and_purchase" parameterOrder="verify_token_and_purchase">
+      <wsdl:input name="verify_token_and_purchase" message="tns:verify_token_and_purchase"/>
+      <wsdl:output name="verify_token_and_purchaseResponse" message="tns:verify_token_and_purchaseResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="verify_funds" parameterOrder="verify_funds">
+      <wsdl:input name="verify_funds" message="tns:verify_funds"/>
+      <wsdl:output name="verify_fundsResponse" message="tns:verify_fundsResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="fill_wallet" parameterOrder="fill_wallet">
+      <wsdl:input name="fill_wallet" message="tns:fill_wallet"/>
+      <wsdl:output name="fill_walletResponse" message="tns:fill_walletResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="get_user" parameterOrder="get_user">
+      <wsdl:input name="get_user" message="tns:get_user"/>
+      <wsdl:output name="get_userResponse" message="tns:get_userResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="data_user" parameterOrder="data_user">
+      <wsdl:input name="data_user" message="tns:data_user"/>
+      <wsdl:output name="data_userResponse" message="tns:data_userResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Application" type="tns:Application">
+    <wsdlsoap11:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="create_purchase_order">
+      <wsdlsoap11:operation soapAction="create_purchase_order" style="document"/>
+      <wsdl:input name="create_purchase_order">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="create_purchase_orderResponse">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="register_user">
+      <wsdlsoap11:operation soapAction="register_user" style="document"/>
+      <wsdl:input name="register_user">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="register_userResponse">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="verify_token_and_purchase">
+      <wsdlsoap11:operation soapAction="verify_token_and_purchase" style="document"/>
+      <wsdl:input name="verify_token_and_purchase">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="verify_token_and_purchaseResponse">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="verify_funds">
+      <wsdlsoap11:operation soapAction="verify_funds" style="document"/>
+      <wsdl:input name="verify_funds">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="verify_fundsResponse">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="fill_wallet">
+      <wsdlsoap11:operation soapAction="fill_wallet" style="document"/>
+      <wsdl:input name="fill_wallet">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="fill_walletResponse">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="get_user">
+      <wsdlsoap11:operation soapAction="get_user" style="document"/>
+      <wsdl:input name="get_user">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="get_userResponse">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="data_user">
+      <wsdlsoap11:operation soapAction="data_user" style="document"/>
+      <wsdl:input name="data_user">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output name="data_userResponse">
+        <wsdlsoap11:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+</wsdl:definitions>

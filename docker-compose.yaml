@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:
+    mysqlpayco:
+        image: mysql:5.7
+        expose:
+            - 3306
+
+        environment:
+            MYSQL_DATABASE: "payco"
+            MYSQL_ROOT_PASSWORD: "demo"
+    soap:
+        depends_on:
+            - mysqlpayco
+        build: ./soap/soap_pyco/
+        command: gunicorn soap_pyco.wsgi:application --bind 0.0.0.0:8000 --workers=1
+        networks:
+            - default
+        ports:
+            - 7777:8000
+        volumes:
+            - ./soap/soap_pyco:/home/app/web
+        environment:
+            # DJANGO_SETTINGS_MODULE: soap_payco.settings
+            HOST: mysqlpayco
+            NAME: "payco"
+            USER: "root"
+            PASSWORD: "demo"
+            PORT: 3306
+    api:
+        environment:
+            HOST: soap
+            PORT: 8000
+            URI: /soap/payco/?wsdl
+
+        depends_on:
+            - mysqlpayco
+            - soap
+        build: ./api/project_api/
+        volumes:
+            - ./api/project_api/:/usr/src/app
+        links:
+            - soap:soap
+        # command: gunicorn soap_pyco.wsgi:application --bind 0.0.0.0:4343 --workers=1
+        networks:
+            - default
+        ports:
+            - 7474:7878
