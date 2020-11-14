@@ -114,6 +114,28 @@ class RegisterUser(ServiceBase):
         totals = purchases.aggregate(sum=Sum('total_amount')).get('sum') or 0
         actual_funds = wallet.amount - totals
         return [wallet.amount, actual_funds, totals]
+        
+
+    @rpc(String, String, _returns=String)
+    def get_user(ctx,email,password):
+        try:
+            print "email : {}".format(email)
+            user = User.objects.get(email=email)
+            if check_password_hash(user.password,password):
+                return "true"
+            else:
+                return "false"
+        except User.DoesNotExist as e:
+            raise Fault( faultstring=str(e))
+
+    @rpc(String, _returns=Array(String))
+    def data_user(ctx, email):
+        try:
+            user = User.objects.get(email=email)
+            return ["true",str(user.id),str(user.id_document),str(user.name),str(user.lastname),
+                    str(user.email), str(user.password), str(user.telephone)]
+        except User.DoesNotExist as e:
+            raise Fault( faultstring=str(e))
              
 application = Application(
     [RegisterUser],
