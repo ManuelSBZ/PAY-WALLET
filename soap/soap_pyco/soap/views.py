@@ -103,6 +103,17 @@ class RegisterUser(ServiceBase):
         except PurchaseOrder.DoesNotExist as e:
             raise Fault(faultstring=str(e))
 
+    @rpc(Integer,Integer,_returns=Array(Float))
+    def verify_funds(ctx,id_document,telephone):
+        wallet = Wallet.objects.filter(user__id_document=id_document,user__telephone=telephone)
+        if not wallet : return "wallet doesn't exist"
+        wallet = wallet.first()
+        purchases = PurchaseOrder.objects.filter(wallet= wallet,
+                                                 status__status=0)
+
+        totals = purchases.aggregate(sum=Sum('total_amount')).get('sum') or 0
+        actual_funds = wallet.amount - totals
+        return [wallet.amount, actual_funds, totals]
              
 application = Application(
     [RegisterUser],
