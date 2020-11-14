@@ -18,6 +18,8 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 
 
+
+
 class RegisterUser(ServiceBase):
     @rpc(Unicode,Unicode,Unicode,Unicode,Unicode,Unicode, _returns= String)
     def register_user(ctx, name, lastname,telephone,password,id_document,email):
@@ -55,7 +57,35 @@ class RegisterUser(ServiceBase):
             return "true"
         except IntegrityError as e:
             raise Fault(faultcode=str(e[0]), faultstring=str(e[1]))
-             
+
+    
+    @rpc(Float, Integer, String, _returns=String)
+    def create_purchase_order(ctx,total_amount, id, purchase_token):
+
+            wallet = Wallet.objects.filter(user__id=id)
+            if not wallet : return "wallet doesn't exist"
+
+            purchases = PurchaseOrder.objects.filter(wallet= wallet.\
+                first(),status__status=False)
+
+            totals = purchases.aggregate(sum=Sum('total_amount')).get('sum') or 0
+            wallet = wallet.first()
+            funds = wallet.amount - totals
+            if funds < total_amount: return "insufficient funds" +\
+            "because the sum of preorders"
+            status = Status.objects.get_or_create(status=False)[0]
+            if len(purchase_token) != 6: return "Token must be 6 digit"
+
+            try:
+                purchase = PurchaseOrder.objects.create(total_amount=total_amount,
+                                                purchase_token=purchase_token,
+                                                wallet=wallet,
+                                                status=status
+                                                    )
+                return "true"
+            except IntegrityError as e :
+                raise Fault(faultcode=str(e[0]), faultstring=str(e[1]))
+            
 application = Application(
     [RegisterUser],
     tns='spyne.examples.epayco',
