@@ -85,7 +85,25 @@ class RegisterUser(ServiceBase):
                 return "true"
             except IntegrityError as e :
                 raise Fault(faultcode=str(e[0]), faultstring=str(e[1]))
-            
+    
+    @rpc(String,_returns=String)
+    def verify_token_and_purchase(ctx,token):
+        try:
+            # user = User.objects.filter(id=id)
+            purchase = PurchaseOrder.objects.get(purchase_token=token, status__status=False)
+
+            amount_to_discount =purchase.total_amount
+            wallet = purchase.wallet
+            wallet.amount = wallet.amount - amount_to_discount
+            status = Status.objects.get_or_create(status=True)
+            purchase.status = status[0]
+            purchase.save()
+            wallet.save()
+            return "true"
+        except PurchaseOrder.DoesNotExist as e:
+            raise Fault(faultstring=str(e))
+
+             
 application = Application(
     [RegisterUser],
     tns='spyne.examples.epayco',
