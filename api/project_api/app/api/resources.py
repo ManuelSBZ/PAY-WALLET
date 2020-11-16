@@ -33,6 +33,7 @@ def register_user():
                        else make_response(jsonify({"error": str(result), "created":False}),400)
                        
 @api.route('/getToken', methods=['GET'])
+# @cross_origin(origin="*", expouse_header=["Authentication","Content-Type"])
 def login_user():
     import datetime
     auth = request.authorization
@@ -72,3 +73,27 @@ def login_user():
                         current_app.config['SECRET_KEY'])
 
     return jsonify({'token' : token.decode('UTF-8')})
+
+@api.route("/fill/wallet", methods=["POST"])
+@token_required
+def fill_wallet(data_user):
+
+    expected_values = ("id_document","telephone","amount")
+    
+    json_request = request.get_json()["amount"]
+
+    data = {k:v for k,v in data_user.items() if k in expected_values}
+
+    data["amount"] = json_request
+
+    if len(data) < len(expected_values): return make_response("Missing Values" +
+    "please verify the entries", 405)
+
+    try:
+        result = client.service.fill_wallet(**data)
+    except Fault as e:
+        result = e
+
+    return jsonify({"message":"transaction succesfuly"}) if result =="true" \
+                        else make_response(jsonify({"error": str(result)}), 400)
+
