@@ -123,3 +123,14 @@ def create_purchase_order(data_user):
 
     return jsonify({"message":"Purchase order created"}) if result == "true" \
                         else make_response(jsonify({"error": str(result)}),405)
+
+@api.route("/confirm/purchase", methods=["POST"])
+@token_required
+def verify_token_and_purchase(data_user):
+    token = request.get_json()["purchase_token"]
+    try:
+        client.service.verify_token_and_purchase(token)
+        return jsonify({"message":"Purchase completed"})
+    except:
+        return make_response(jsonify({"error":"token purchase invalid"}), 400)
+
