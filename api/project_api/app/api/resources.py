@@ -134,3 +134,24 @@ def verify_token_and_purchase(data_user):
     except:
         return make_response(jsonify({"error":"token purchase invalid"}), 400)
 
+
+@api.route("/user/funds", methods=["POST"])
+@token_required
+def verify_funds(data_user):
+
+    expected_values = ("id_document","telephone")
+    data = {k : v for k, v in data_user.items() if k in expected_values}
+    try:
+        amounts = client.service.verify_funds(**data)
+    except Fault:
+        return make_response(jsonify({"error":"id_document does \
+                                                    not match any user"}),401)
+
+    result = {k : v for k ,v in zip(("current_funds",
+                                     "available_founds",
+                                     "preorders_doubt"),
+                                      amounts)
+                                            } if len(amounts) == 3 else None
+    return jsonify(result) if result else make_response(
+            jsonify({"message":"missing funds data from soap service"},500)
+            )
