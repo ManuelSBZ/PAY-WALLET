@@ -1,0 +1,266 @@
+{
+	"info": {
+		"_postman_id": "e3210b28-16ee-4b02-8459-4c3ffb3d2f3c",
+		"name": "payco_wallet",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "verify funds ",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-tokens",
+						"value": "{{ACCESS_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id_document\":\"27005901\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/user/funds",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"user",
+						"funds"
+					]
+				},
+				"description": "it verifies the fund of th logged user"
+			},
+			"response": []
+		},
+		{
+			"name": "get token",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "123",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "aasemeco@hotmail.com",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/getToken",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"getToken"
+					]
+				},
+				"description": "endpoint to request token"
+			},
+			"response": []
+		},
+		{
+			"name": "register user",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-tokens",
+						"value": "{{ACCESS_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"alfredo\",\r\n    \"lastname\":\"Semeco\",\r\n    \"email\":\"aasemeco@gmail.com\",\r\n    \"telephone\":\"822389\",\r\n    \"password\":\"demo2\",\r\n    \"id_document\":\"27005905\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/register/user",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"register",
+						"user"
+					]
+				},
+				"description": "data needed : name,lastname,id_document,password,telephone,email"
+			},
+			"response": []
+		},
+		{
+			"name": "fill wallet",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-tokens",
+						"value": "{{ACCESS_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"amount\":7000000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/fill/wallet",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"fill",
+						"wallet"
+					]
+				},
+				"description": "method to fill money"
+			},
+			"response": []
+		},
+		{
+			"name": "create purchase order",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-tokens",
+						"value": "{{ACCESS_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"total_amount\":\"3998000\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/create/purchase/order",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"create",
+						"purchase",
+						"order"
+					]
+				},
+				"description": "create order purchase to be that will be confirmed through purchase_token"
+			},
+			"response": []
+		},
+		{
+			"name": "complete purchase",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "x-access-tokens",
+						"value": "{{ACCESS_TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"purchase_token\":\"00b303\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:{{PORT}}/api/confirm/purchase",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "{{PORT}}",
+					"path": [
+						"api",
+						"confirm",
+						"purchase"
+					]
+				},
+				"description": "to confirme and complete purchase"
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "5876cdd6-d8a7-40b8-a7f8-dfde9e7c3b9e",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "9662ed0b-38ac-4d2e-9c89-cd9977e4b085",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "aa2fd384-37a2-4c6a-a284-23dfb4efa98d",
+			"key": "PORT",
+			"value": "7474"
+		},
+		{
+			"id": "4bba46e3-09de-43c5-950c-36da3aee2c22",
+			"key": "ACCESS_TOKEN",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjMiLCJlbWFpbCI6ImFhc2VtZWNvQGhvdG1haWwuY29tIiwiZXhwIjoxNjA1NjYyODc4fQ.rH_XUDFM8MF6pI_0MCOvsJmefB3qtvfJKb5fsHLlih4"
+		}
+	],
+	"protocolProfileBehavior": {}
+}
