@@ -33,11 +33,9 @@ def register_user():
                        else make_response(jsonify({"error": str(result), "created":False}),400)
                        
 @api.route('/getToken', methods=['GET'])
-# @cross_origin(origin="*", expouse_header=["Authentication","Content-Type"])
 def login_user():
     import datetime
     auth = request.authorization
-    print(f"{auth.password}")
     if not auth or not auth.username or not auth.password:
         return make_response(jsonify(
                     {"message":"missing password or/and username"}), 
@@ -52,7 +50,6 @@ def login_user():
         return make_response(jsonify({"message":"user not verified"}),
         500, {'WWW.Authentication': 'Basic realm: "login required"'}
          )
-        print(owner_verified)
     if owner_verified != "true":
         return make_response(jsonify(
         {"message":"wrong password"}),
@@ -97,3 +94,32 @@ def fill_wallet(data_user):
     return jsonify({"message":"transaction succesfuly"}) if result =="true" \
                         else make_response(jsonify({"error": str(result)}), 400)
 
+@api.route("/create/purchase/order", methods=["POST"])
+@token_required
+def create_purchase_order(data_user):
+
+    expected_values = ("total_amount", "id")
+    
+    json_request = request.get_json()["total_amount"]
+
+    data = {k:v for k,v in data_user.items() if k in expected_values}
+    
+    data["total_amount"] = json_request
+    data["purchase_token"] = str(uuid.uuid4())[:6]
+
+    if len(data) < len(expected_values): return make_response("Missing Values" +
+    "please verify the entries", 405)
+
+    token = data["purchase_token"]
+
+    message = f"Subject: Payco Token purchase \n\ntoken purchase: {token}"
+    email(message,"paysemecorp98@gmail.com",data_user["email"])
+
+    try:
+        result = client.service.create_purchase_order(**data)
+    except Fault as e:
+        result = e
+
+
+    return jsonify({"message":"Purchase order created"}) if result == "true" \
+                        else make_response(jsonify({"error": str(result)}),405)
