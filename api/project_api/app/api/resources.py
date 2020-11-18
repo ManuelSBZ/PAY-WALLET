@@ -84,7 +84,7 @@ def fill_wallet(data_user):
     data["amount"] = json_request
 
     if len(data) < len(expected_values): return make_response("Missing Values" +
-    "please verify the entries", 405)
+    "please verify the entries", 400)
 
     try:
         result = client.service.fill_wallet(**data)
@@ -112,17 +112,16 @@ def create_purchase_order(data_user):
 
     token = data["purchase_token"]
 
-    message = f"Subject: Payco Token purchase \n\ntoken purchase: {token}"
-    email(message,"paysemecorp98@gmail.com",data_user["email"])
-
     try:
         result = client.service.create_purchase_order(**data)
     except Fault as e:
         result = e
+    message = f"Subject: Payco Token purchase \n\ntoken purchase: {token}"
+    email(message,"paysemecorp98@gmail.com",data_user["email"])
 
 
     return jsonify({"message":"Purchase order created"}) if result == "true" \
-                        else make_response(jsonify({"error": str(result)}),405)
+                        else make_response(jsonify({"error": str(result)}),400)
 
 @api.route("/confirm/purchase", methods=["POST"])
 @token_required
