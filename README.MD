@@ -20,19 +20,21 @@ API:
         2. FACTORY
 
 SOAP
+
     - TECNOLOGIAS PRINCIPALES:
         1. DJANGO
         2. DJANGO.ORM
         3. python 2.7
         4. Spyne
-    -BD:
-        MySQL 5.7 
+
+    - BD:
+        1. MySQL 5.7 
 
     - PATRONES:
         1. DJANGO APPS
 FRONT
-     - TECNOLOGIAS PRINCIPALES:
+    - TECNOLOGIAS PRINCIPALES:
         1. React : latest
     
     - PATRONES
-        2. Hooks
+        1. Hooks

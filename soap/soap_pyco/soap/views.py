@@ -21,16 +21,18 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 
 class RegisterUser(ServiceBase):
-    @rpc(Unicode,Unicode,Unicode,Unicode,Unicode,Unicode, _returns= String)
+    @rpc(String,String,String,String,String,String, _returns= String)
     def register_user(ctx, name, lastname,telephone,password,id_document,email):
         try:
-            User.objects.create(telephone= telephone,
+            user = User.objects.create(telephone= telephone,
                             lastname=lastname,
                             email=email,
                             id_document=id_document,
                             password=generate_password_hash(password),
                             name=name
                             )
+            wallet = Wallet(user= user, amount = 0)
+            wallet.save()
             return "true"
         except IntegrityError as e:
             raise Fault(faultcode=str(e[0]), faultstring=str(e[1]))
@@ -44,19 +46,14 @@ class RegisterUser(ServiceBase):
 
         wallet = Wallet.objects.filter(user=user)
         
-        if wallet:
-            wallet = wallet.first()
-            try:
-                wallet.amount = amount + wallet.amount
-                wallet.save()
-                return "true"
-            except IntegrityError as e:
-                raise Fault(faultcode=str(e[0]), faultstring=str(e[1]))
-        try:            
-            Wallet.objects.create(user=user, amount=amount)
+        wallet = wallet.first()
+
+        try:
+            wallet.amount = amount + wallet.amount
+            wallet.save()
             return "true"
         except IntegrityError as e:
-            raise Fault(faultcode=str(e[0]), faultstring=str(e[1]))
+                raise Fault(faultcode=str(e[0]), faultstring=str(e[1]))
 
     
     @rpc(Float, Integer, String, _returns=String)
@@ -113,6 +110,10 @@ class RegisterUser(ServiceBase):
 
         totals = purchases.aggregate(sum=Sum('total_amount')).get('sum') or 0
         actual_funds = wallet.amount - totals
+        if type(wallet.amount) != float:
+            result = [0, 0, totals]
+            return result
+
         return [wallet.amount, actual_funds, totals]
         
 
@@ -139,7 +140,7 @@ class RegisterUser(ServiceBase):
              
 application = Application(
     [RegisterUser],
-    tns='spyne.examples.epayco',
+    tns='spyne.examples.hello',
     in_protocol=Soap11(validator='lxml'),
     out_protocol=Soap11()
 )
