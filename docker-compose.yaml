@@ -21,7 +21,6 @@ services:
         volumes:
             - ./soap/soap_pyco:/home/app/web
         environment:
-            # DJANGO_SETTINGS_MODULE: soap_payco.settings
             HOST: mysqlpayco
             NAME: "payco"
             USER: "root"
@@ -41,7 +40,6 @@ services:
             - ./api/project_api/:/usr/src/app
         links:
             - soap:soap
-        # command: gunicorn soap_pyco.wsgi:application --bind 0.0.0.0:4343 --workers=1
         networks:
             - default
         ports:
