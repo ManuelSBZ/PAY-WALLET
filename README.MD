@@ -11,6 +11,14 @@ Despliegue en local:
   1. Docker y Docker Compose para su despliegue en maquina local.
   2. Ubicarse en la carpeta que contiene el docker compose y ejecutar el siguiente comando "docker-compose up --build".
   3. Esperar a que los 4 containers se levanten y luego realizar las pruebas pertinentes.
+  
+  puertos usados en LOCALHOST:
+    localhost:3306 --> Mysql
+    localhost:7777 --> soap
+    localhost:7474  --> api
+    localhost:3000 --> front_react
+  IMPORTANTE: se debe aegurar que no haya ningun proceso corriendo en estos puertos para el correcto funcionamiento.
+    
 
 API:
    - TECNOLOGIAS:
