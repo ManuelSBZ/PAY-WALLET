@@ -47,13 +47,13 @@ services:
             - 7474:7878
 
     front-react:
-        build: ./frontend/
+        build: ./frontend_react/
         depends_on:
                - api
         networks:
             - front
         volumes:
-          - ./frontend:/usr/src/app
+          - ./frontend_react:/usr/src/app
         # environment:
         #     HOST: api 
         #     PORT: 7878
