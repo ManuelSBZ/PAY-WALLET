@@ -7,6 +7,16 @@
 	"item": [
 		{
 			"name": "verify funds ",
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"accept-encoding": true,
+					"connection": true,
+					"accept": true,
+					"content-length": true,
+					"host": true,
+					"user-agent": true
+				}
+			},
 			"request": {
 				"method": "POST",
 				"header": [
@@ -14,11 +24,23 @@
 						"key": "x-access-tokens",
 						"value": "{{ACCESS_TOKEN}}",
 						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"id_document\":\"27005901\"\r\n}",
+					"raw": "{ \r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -49,13 +71,13 @@
 					"type": "basic",
 					"basic": [
 						{
-							"key": "password",
-							"value": "123",
+							"key": "username",
+							"value": "aasemeco@hotmail.com",
 							"type": "string"
 						},
 						{
-							"key": "username",
-							"value": "aasemeco@hotmail.com",
+							"key": "password",
+							"value": "demo2",
 							"type": "string"
 						}
 					]
@@ -91,7 +113,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"name\":\"alfredo\",\r\n    \"lastname\":\"Semeco\",\r\n    \"email\":\"aasemeco@gmail.com\",\r\n    \"telephone\":\"822389\",\r\n    \"password\":\"demo2\",\r\n    \"id_document\":\"27005905\"\r\n}",
+					"raw": "{\r\n    \"name\":\"alfredo\",\r\n    \"lastname\":\"Semeco\",\r\n    \"email\":\"aasemeco@hotmail.com\",\r\n    \"telephone\":\"8223810\",\r\n    \"password\":\"demo2\",\r\n    \"id_document\":\"27005901\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -173,7 +195,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://localhost:{{PORT}}/api/create/purchase/order",
+					"raw": "http://localhost:{{PORT}}/api/create/purchase/order?=",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -184,6 +206,12 @@
 						"create",
 						"purchase",
 						"order"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": ""
+						}
 					]
 				},
 				"description": "create order purchase to be that will be confirmed through purchase_token"
@@ -203,7 +231,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\r\n    \"purchase_token\":\"00b303\"\r\n}",
+					"raw": "{\r\n    \"purchase_token\":\"6a063b\"\r\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -252,12 +280,12 @@
 	],
 	"variable": [
 		{
-			"id": "aa2fd384-37a2-4c6a-a284-23dfb4efa98d",
+			"id": "aedb7c8c-bce1-4e06-b681-e0832e1a70e6",
 			"key": "PORT",
 			"value": "7474"
 		},
 		{
-			"id": "4bba46e3-09de-43c5-950c-36da3aee2c22",
+			"id": "8a2c2620-8485-45c8-933f-7cca30fc5277",
 			"key": "ACCESS_TOKEN",
 			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6IjMiLCJlbWFpbCI6ImFhc2VtZWNvQGhvdG1haWwuY29tIiwiZXhwIjoxNjA1NjYyODc4fQ.rH_XUDFM8MF6pI_0MCOvsJmefB3qtvfJKb5fsHLlih4"
 		}

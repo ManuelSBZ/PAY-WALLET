@@ -120,7 +120,6 @@ class RegisterUser(ServiceBase):
     @rpc(String, String, _returns=String)
     def get_user(ctx,email,password):
         try:
-            print "email : {}".format(email)
             user = User.objects.get(email=email)
             if check_password_hash(user.password,password):
                 return "true"

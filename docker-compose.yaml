@@ -42,5 +42,25 @@ services:
             - soap:soap
         networks:
             - default
+            - front
         ports:
             - 7474:7878
+
+    front-react:
+        build: ./frontend/
+        depends_on:
+               - api
+        networks:
+            - front
+        volumes:
+          - ./frontend:/usr/src/app
+        # environment:
+        #     HOST: api 
+        #     PORT: 7878
+        ports:
+            - 3000:3000
+networks:
+    front:
+        driver:
+            bridge
+         
