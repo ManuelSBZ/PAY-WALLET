@@ -13,31 +13,30 @@ Despliegue en local:
   3. Esperar a que los 4 containers se levanten y luego realizar las pruebas pertinentes.
 
 API:
-    - TECNOLOGIAS:
-        1. Flask
-        2. Flask-CORS
-        3. python 3.7
-        4. PyJWT
-        5. SMTPLIB
-        6. Zeep
+   - TECNOLOGIAS:
+       1. Flask
+       2. Flask-CORS
+       3. python 3.7
+       4. PyJWT
+       5. SMTPLIB
+       6. Zeep
 
    - PATRONES:
-        1. BLUEPRINTS
-        2. FACTORY
+      1. BLUEPRINTS
+      2. FACTORY
 
 SOAP
-
   - TECNOLOGIAS PRINCIPALES:
-        1. DJANGO
-        2. DJANGO.ORM
-        3. python 2.7
-        4. Spyne
+       1. DJANGO
+       2. DJANGO.ORM
+       3. python 2.7
+       4. Spyne
 
   - BD:
-        1. MySQL 5.7 
+       1. MySQL 5.7 
 
   - PATRONES:
-        1. DJANGO APPS
+       1. DJANGO APPS
         
 FRONT
    - TECNOLOGIAS PRINCIPALES:
