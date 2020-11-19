@@ -8,9 +8,9 @@ un servidor smtp para envio de token de confirmacion al correo del usuario logge
 
 
 Despliegue en local: 
-    1. Docker y Docker Compose para su despliegue en maquina local.
-    2. Ubicarse en la carpeta que contiene el docker compose y ejecutar el siguiente comando "docker-compose up --build".
-    3. Esperar a que todos los 4 containers se levanten y luego realizar las pruebas con desde la app.
+  1. Docker y Docker Compose para su despliegue en maquina local.
+  2. Ubicarse en la carpeta que contiene el docker compose y ejecutar el siguiente comando "docker-compose up --build".
+  3. Esperar a que los 4 containers se levanten y luego realizar las pruebas pertinentes.
 
 API:
     - TECNOLOGIAS:
