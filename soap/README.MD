@@ -17,7 +17,7 @@
     cuyo Diagrama Entidad Relacion es el siguiente.
 
  # Diagrama entidad relación
-![Diagrama entidad relación Ecommerce](hhttps://github.com/ManuelSBZ/PAY-WALLET/blob/master/ERD.png)
+![Diagrama entidad relación wallet](https://github.com/ManuelSBZ/PAY-WALLET/blob/master/ERD.PNG)
 
 
 Teniendose 7 servicios soap en su realizacion como los que siguen:
