@@ -6,6 +6,12 @@ que interactua con la capa de datos implementada con mysql 5.7 imagen docker.El 
 con JWT, misma utilazada para llevar a cabo la session de un usuario registrado y asi mismo implementa
 un servidor smtp para envio de token de confirmacion al correo del usuario loggeado. Por ultimo tenemos una app front hecha con React que hace de UI para probar este proyecto didactico. 
 
+
+Despliegue en local: 
+    1. Docker y Docker Compose para su despliegue en maquina local.
+    2. Ubicarse en la carpeta que contiene el docker compose y ejecutar el siguiente comando "docker-compose up --build".
+    3. Esperar a que todos los 4 containers se levanten y luego realizar las pruebas con desde la app.
+
 API:
     - TECNOLOGIAS:
         1. Flask
@@ -15,26 +21,27 @@ API:
         5. SMTPLIB
         6. Zeep
 
-    - PATRONES:
+   - PATRONES:
         1. BLUEPRINTS
         2. FACTORY
 
 SOAP
 
-    - TECNOLOGIAS PRINCIPALES:
+  - TECNOLOGIAS PRINCIPALES:
         1. DJANGO
         2. DJANGO.ORM
         3. python 2.7
         4. Spyne
 
-    - BD:
+  - BD:
         1. MySQL 5.7 
 
-    - PATRONES:
+  - PATRONES:
         1. DJANGO APPS
+        
 FRONT
-    - TECNOLOGIAS PRINCIPALES:
+   - TECNOLOGIAS PRINCIPALES:
         1. React : latest
     
-    - PATRONES
+   - PATRONES
         1. Hooks
