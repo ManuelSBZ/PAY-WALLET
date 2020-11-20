@@ -7,7 +7,7 @@ con JWT, misma utilazada para llevar a cabo la session de un usuario registrado 
 un servidor smtp para envio de token de confirmacion al correo del usuario loggeado. Por ultimo tenemos una app front hecha con React que hace de UI para probar este proyecto didactico. 
 
 
-Despliegue en local: 
+DESPLIEGUE EN LOCAL: 
   1. Docker y Docker Compose para su despliegue en maquina local.
   2. Ubicarse en la carpeta que contiene el docker compose y ejecutar el siguiente comando "docker-compose up --build".
   3. Esperar a que los 4 containers se levanten y luego realizar las pruebas pertinentes.
