@@ -13,7 +13,7 @@ Despliegue en local:
   3. Esperar a que los 4 containers se levanten y luego realizar las pruebas pertinentes.
   
   puertos usados en LOCALHOST:
-  - localhost:3306 --> Mysql
+  - Docker host Red Default expuesta en port 3306 --> Mysql
   - localhost:7777 --> soap
   - localhost:7474  --> api
   - localhost:3000 --> front_react
