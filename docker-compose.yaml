@@ -46,19 +46,28 @@ services:
         ports:
             - 7474:7878
 
-    front-react:
+    # front-react:
+    #     build: ./frontend_react/
+    #     depends_on:
+    #            - api
+    #     networks:
+    #         - front
+    #     volumes:
+    #       - ./frontend_react:/usr/src/app
+    #     # environment:
+    #     #     HOST: api 
+    #     #     PORT: 7878
+    #     ports:
+    #         - 3000:3000
+    nginx_react:
         build: ./frontend_react/
-        depends_on:
-               - api
         networks:
             - front
-        volumes:
-          - ./frontend_react:/usr/src/app
-        # environment:
-        #     HOST: api 
-        #     PORT: 7878
+        depends_on:
+            - api
         ports:
-            - 3000:3000
+          - 3000:80
+        
 networks:
     front:
         driver:
