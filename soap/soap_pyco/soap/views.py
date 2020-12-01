@@ -41,7 +41,7 @@ class RegisterUser(ServiceBase):
     def fill_wallet(ctx,telephone,id_document,amount):
         try:
             user = User.objects.get(id_document=id_document)
-        except user.DoesNotExist as e :
+        except User.DoesNotExist as e :
             raise Fault( faultstring=str(e))
 
         wallet = Wallet.objects.filter(user=user)
