@@ -3,3 +3,4 @@ __pycache__
 *_initial.py
 *_auto_*.py
 .ash_history
+node_modules

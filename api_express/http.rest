@@ -1,0 +1,18 @@
+
+POST http://localhost:7474/api/register/user
+Content-Type: application/json
+
+{
+    "name":"manuel",
+    "lastname":"semeco",
+    "telephone":"123",
+    "password":"ltn",
+    "email":"manumeco98@gmail.com",
+    "id_document":"27005900"
+}
+
+###
+GET http://localhost:7474/api/getToken
+Authorization: Basic manumeco@gmail.com:ltn
+
+
