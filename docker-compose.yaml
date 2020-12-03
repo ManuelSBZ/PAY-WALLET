@@ -5,7 +5,6 @@ services:
         image: mysql:5.7
         expose:
             - 3306
-
         environment:
             MYSQL_DATABASE: "payco"
             MYSQL_ROOT_PASSWORD: "demo"
@@ -35,30 +34,17 @@ services:
         depends_on:
             - mysqlpayco
             - soap
-        build: ./api/project_api/
+        build: ./api_express
         volumes:
-            - ./api/project_api/:/usr/src/app
+            - ./api_express/:/usr/src/app
         links:
             - soap:soap
         networks:
             - default
             - front
         ports:
-            - 7474:7878
+            - 7474:7474
 
-    # front-react:
-    #     build: ./frontend_react/
-    #     depends_on:
-    #            - api
-    #     networks:
-    #         - front
-    #     volumes:
-    #       - ./frontend_react:/usr/src/app
-    #     # environment:
-    #     #     HOST: api 
-    #     #     PORT: 7878
-    #     ports:
-    #         - 3000:3000
     nginx_react:
         build: ./frontend_react/
         networks:
@@ -66,8 +52,8 @@ services:
         depends_on:
             - api
         ports:
-          - 3000:80
-        
+            - 3001:80
+
 networks:
     front:
         driver:
