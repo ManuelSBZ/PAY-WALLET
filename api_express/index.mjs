@@ -3,7 +3,10 @@ import Express from "express"
 import { default as jwt } from "jsonwebtoken"
 import { default as dotenv } from "dotenv"
 import { default as soap_generator } from "./modules/soap_generate"
+import { default as email } from "./modules/email.js"
+import { default as zip_arrays } from "./modules/zip"
 import { default as cors } from "cors"
+import uuidv4 from "./modules/uuid.js"
 
 const server = Express()
 const port = 7474
@@ -71,6 +74,8 @@ function authenticateToken(req, res, next) {
     // pass the execution off to whatever request the client intended
   })
 }
+
+
 
 server.post("/api/register/user", (req, res) => {
   const data = req.body
@@ -141,7 +146,145 @@ server.get("/api/getToken", (req, res) => {
     }
   )
 
+  // res.status(200).json({"message":"que sera lo que pasa?"})
+
 })
+
+server.post("/api/fill/wallet", authenticateToken, (req, res) => {
+  const data = req.body
+  const expected_values = ["telephone", "id_document", "amount"]
+  let data_to_push = Object.entries(req.user).filter((item) => expected_values
+    .includes(item[0]))
+  data_to_push.push(["amount", data["amount"]])
+  if (data_to_push.length !== expected_values.length) {
+    return res.status(400)
+      .json({
+        "message": "Missing values, please verify the entries"
+      })
+  }
+  const data_result = {}
+  for (let a of expected_values) {
+    data_result[a] = data_to_push.find((item) => item[0] === a)[1]
+  }
+  soap_generator(url, "fill_wallet", data_result, (err, result) => {
+    if (err) {
+      console.log(err.error)
+      res.status(400)
+        .json({
+          "error": err.body.split("<faultstring>")[1]
+            .split("</faultstring>")[0]
+        })
+    } else {
+      res.json({ message: "transaction succesfuly" })
+    }
+  })
+})
+
+server.post("/api/create/purchase/order", authenticateToken, (req, res) => {
+  const data = req.body
+  const expected_values = ["total_amount", "id", "purchase_token"]
+  let data_to_push = Object.entries(data).filter((item) => expected_values
+    .includes(item[0]))
+  const token = uuidv4().slice(0, 6)
+
+  data_to_push.push(["id", req.user["id"]])
+  data_to_push.push(["purchase_token", token])
+  if (data_to_push.length !== expected_values.length) {
+    return res.status(400)
+      .json({
+        "message": "Missing values, please verify the entries"
+      })
+  }
+  const data_result = {}
+  for (let a of expected_values) {
+    data_result[a] = data_to_push.find((item) => item[0] === a)[1]
+  }
+  soap_generator(url, "create_purchase_order", data_result, (err, result) => {
+    if (err) {
+      console.log(err.message)
+      res.status(400)
+        .json({
+          "error": err.body.split("<faultstring>")[1]
+            .split("</faultstring>")[0]
+        })
+    } else {
+
+      res.json({ message: "Purchase order created" })
+      email("gmail",
+        { user: "paysemecorp98@gmail.com", pass: "semecorp98" },
+        "paysemecorp",
+        "manumeco98@gmail.com",
+        "Payco Token purchase",
+        `token purchase:${token}`)
+    }
+  })
+}
+)
+
+server.post("/api/confirm/purchase", (req, res) => {
+  const data = req.body
+  const newData = { token: data.purchase_token }
+  if (data === undefined) res.status(400).json({ error: "missing token purchase" })
+
+  soap_generator(url, "verify_token_and_purchase", newData, (err, result) => {
+    if (err) {
+      console.log(err.message)
+      res.status(400)
+        .json({
+          "error": "token purchase invalid"
+        })
+    } else {
+
+      res.json({ message: "Purchase completed" })
+    }
+
+
+  })
+})
+
+server.post("/api/user/funds", authenticateToken, (req, res) => {
+  const expected_values = ["id_document", "telephone"]
+  let data_to_push = Object.entries(req.user).filter((item) => expected_values
+    .includes(item[0]))
+  if (data_to_push.length !== expected_values.length) {
+    return res.status(400)
+      .json({
+        "message": "Missing values, please verify the entries"
+      })
+  }
+  const data_result = {}
+  for (let a of expected_values) {
+    data_result[a] = data_to_push.find((item) => item[0] === a)[1]
+  }
+  soap_generator(url, "verify_funds", data_result, (err, result) => {
+    if (err) {
+      console.log(err.message)
+      res.status(400)
+        .json({
+          "error": "id_document does not match any user"
+        })
+    } else {
+      const keys = [
+        "current_funds",
+        "available_founds",
+        "preorders_doubt"
+      ]
+      const values = result.verify_fundsResult.float
+      let data_to_send = zip_arrays(keys,values)
+      const final_data = data_to_send.reduce((obj, entry) => {
+        obj[entry[0]] = entry[1];
+        return obj;
+      }, {});
+
+      res.json(final_data)
+
+
+    }
+  })
+
+
+})
+
 
 
 server.listen(port, () => {
