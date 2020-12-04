@@ -22,16 +22,16 @@ DESPLIEGUE EN LOCAL:
 
 API:
    - TECNOLOGIAS:
-       1. Flask
-       2. Flask-CORS
-       3. python 3.7
-       4. PyJWT
-       5. SMTPLIB
-       6. Zeep
+       1. **node:10-alpine**
+       2. express
+       3. cors
+       4. jsonwebtoken
+       5. Dotenv
+       6. node-soap
 
    - PATRONES:
-      1. BLUEPRINTS
-      2. FACTORY
+      1. Commojs
+      2. Ecmas6
 
 SOAP
   - TECNOLOGIAS PRINCIPALES:
@@ -48,7 +48,8 @@ SOAP
         
 FRONT
    - TECNOLOGIAS PRINCIPALES:
-        1. React : latest
+        1. **React** 
     
    - PATRONES
         1. Hooks
+        2. Ecmas6
