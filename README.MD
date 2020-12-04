@@ -22,7 +22,7 @@ DESPLIEGUE EN LOCAL:
 
 API:
    - TECNOLOGIAS:
-       1. Nodejs 10-alpine
+       1. **node:10-alpine**
        2. express
        3. cors
        4. jsonwebtoken
@@ -48,7 +48,7 @@ SOAP
         
 FRONT
    - TECNOLOGIAS PRINCIPALES:
-        1. React : latest
+        1. **React** 
     
    - PATRONES
         1. Hooks
