@@ -1,4 +1,7 @@
+GET http://localhost:7474/api/getToken
+Authorization: Basic manumeco@gmail.com:ltn
 
+###
 POST http://localhost:7474/api/register/user
 Content-Type: application/json
 
@@ -12,7 +15,36 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:7474/api/getToken
-Authorization: Basic manumeco@gmail.com:ltn
+POST  http://localhost:7474/api/fill/wallet
+x-access-tokens: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE4IiwiZW1haWwiOiJtYW51bWVjb0BnbWFpbC5jb20iLCJpYXQiOjE2MDY5ODM1NjgsImV4cCI6MTYwNjk4NTM2OH0.lUMiiGs1Q6Xh6vRcgW-Vr6QZF00AUNuoqCDacQOur_s
+Content-Type: application/json
+
+{
+    "amount":"1000"
+}
+
+###
+POST http://localhost:7474/api/create/purchase/order
+x-access-tokens: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE4IiwiZW1haWwiOiJtYW51bWVjb0BnbWFpbC5jb20iLCJpYXQiOjE2MDY5ODM1NjgsImV4cCI6MTYwNjk4NTM2OH0.lUMiiGs1Q6Xh6vRcgW-Vr6QZF00AUNuoqCDacQOur_s
+Content-Type: application/json
+
+{
+    "total_amount":"1000"
+}
+
+###
+POST http://localhost:7474/api/confirm/purchase
+x-access-tokens: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE4IiwiZW1haWwiOiJtYW51bWVjb0BnbWFpbC5jb20iLCJpYXQiOjE2MDY5ODM1NjgsImV4cCI6MTYwNjk4NTM2OH0.lUMiiGs1Q6Xh6vRcgW-Vr6QZF00AUNuoqCDacQOur_s
+Content-Type: application/json
+
+{
+    "token":"8428bc"
+}
+
+
+###
+POST http://localhost:7474/api/user/funds
+x-access-tokens: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjE4IiwiZW1haWwiOiJtYW51bWVjb0BnbWFpbC5jb20iLCJpYXQiOjE2MDY5ODM1NjgsImV4cCI6MTYwNjk4NTM2OH0.lUMiiGs1Q6Xh6vRcgW-Vr6QZF00AUNuoqCDacQOur_s
+Content-Type: application/json
 
 
